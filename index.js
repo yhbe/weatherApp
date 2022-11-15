@@ -8,7 +8,7 @@ async function getWeatherData(str) {
   try {
     if (country === undefined && state === undefined) {
       const response = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=7a12fe1d21939af0deb6d706dcb169ec`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=7a12fe1d21939af0deb6d706dcb169ec`,
         { mode: 'cors' }
       );
       const data = await response.json();
@@ -18,14 +18,14 @@ async function getWeatherData(str) {
       country = state;
       state = '';
       const response = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${location},${country}&APPID=7a12fe1d21939af0deb6d706dcb169ec`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${location},${country}&APPID=7a12fe1d21939af0deb6d706dcb169ec`,
         { mode: 'cors' }
       );
       const data = await response.json();
       return displayWeather(data), errorMessage.classList.add('hidden');
     } else {
       const response = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${location},${state},${country}&APPID=7a12fe1d21939af0deb6d706dcb169ec`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${location},${state},${country}&APPID=7a12fe1d21939af0deb6d706dcb169ec`,
         { mode: 'cors' }
       );
       const data = await response.json();
