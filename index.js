@@ -2,6 +2,7 @@ async function getWeatherData(str) {
   let location = str[0];
   let state = str[1];
   let country = str[2];
+
   try {
     if (country === undefined && state === undefined) {
       const response = await fetch(
@@ -26,12 +27,46 @@ async function getWeatherData(str) {
       return displayWeather(data);
     }
   } catch {
-    console.log('that didnt work...err');
+    console.log('Try again!');
   }
 }
 
 function displayWeather(data) {
-  console.log(data, data.name, data.sys.country);
+  const weather = document.querySelector('.weather');
+  const city = document.querySelector('.city');
+  const temperature = document.querySelector('.temperature');
+  const emojiWeatherIcon = document.querySelector('.emoji-of-weather');
+
+  weather.innerHTML = data.weather[0].description;
+  city.innerHTML = data.name;
+  temperature.innerHTML = convertKelvin(data);
+  emojiWeatherIcon.innerHTML = handleWeatherIcon(data);
+}
+
+function convertKelvin(data) {
+  let convertedToF = 1.8 * (data.main.temp - 273) + 32;
+  return `${Math.round(convertedToF)}&#8457`;
+}
+
+function handleWeatherIcon(data) {
+  if (data.weather[0].main === 'Rain') {
+    return '🌧';
+  }
+  if (data.weather[0].main === 'Drizzle') {
+    return '🌧';
+  }
+  if (data.weather[0].main === 'Thunderstorm') {
+    return '⛈️';
+  }
+  if (data.weather[0].main === 'Clear') {
+    return '🌞';
+  }
+  if (data.weather[0].main === 'Clouds') {
+    return '☁️';
+  }
+  if (data.weather[0].main === 'Snow') {
+    return '🌨';
+  } else return '🌫️';
 }
 
 const form = document.querySelector('form');
@@ -40,4 +75,7 @@ form.addEventListener('submit', function (event) {
   const input = document.querySelector('form > input');
   let str = input.value.split(',');
   getWeatherData(str);
+  form.reset();
 });
+
+getWeatherData(['london']);
