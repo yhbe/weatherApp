@@ -1,4 +1,6 @@
 async function getWeatherData(str) {
+  const errorMessage = document.querySelector('form + span');
+
   let location = str[0];
   let state = str[1];
   let country = str[2];
@@ -9,7 +11,7 @@ async function getWeatherData(str) {
         `http://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=7a12fe1d21939af0deb6d706dcb169ec`
       );
       const data = await response.json();
-      return displayWeather(data);
+      return displayWeather(data), errorMessage.classList.add('hidden');
     }
     if (country === undefined) {
       country = state;
@@ -18,16 +20,16 @@ async function getWeatherData(str) {
         `http://api.openweathermap.org/data/2.5/weather?q=${location},${country}&APPID=7a12fe1d21939af0deb6d706dcb169ec`
       );
       const data = await response.json();
-      return displayWeather(data);
+      return displayWeather(data), errorMessage.classList.add('hidden');
     } else {
       const response = await fetch(
         `http://api.openweathermap.org/data/2.5/weather?q=${location},${state},${country}&APPID=7a12fe1d21939af0deb6d706dcb169ec`
       );
       const data = await response.json();
-      return displayWeather(data);
+      return displayWeather(data), errorMessage.classList.add('hidden');
     }
   } catch {
-    console.log('Try again!');
+    errorMessage.classList.remove('hidden');
   }
 }
 

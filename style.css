@@ -68,3 +68,13 @@ button > img{
 .emoji-of-weather{
   font-size: 3rem;
 }
+
+span{
+  display: block;
+  margin-left: 4px;
+  font-size: .8rem;
+}
+
+.hidden{
+  display: none;
+}
